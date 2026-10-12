@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/* ───────────── Taawon medical design tokens ───────────── */
+@theme {
+  --font-sans: var(--font-plex-arabic), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Medical blue (primary) */
+  --color-brand-50: #eef5ff;
+  --color-brand-100: #d9e8ff;
+  --color-brand-200: #bcd7ff;
+  --color-brand-300: #8ebdff;
+  --color-brand-400: #5998fb;
+  --color-brand-500: #3478f0;
+  --color-brand-600: #1565d8;
+  --color-brand-700: #1450b0;
+  --color-brand-800: #16448e;
+  --color-brand-900: #173b72;
+
+  /* Clinical teal (accent / health) */
+  --color-care-50: #effcfb;
+  --color-care-100: #c9f5f2;
+  --color-care-200: #95ebe6;
+  --color-care-300: #5bd9d4;
+  --color-care-400: #2cc0bd;
+  --color-care-500: #0ea5a4;
+  --color-care-600: #098484;
+  --color-care-700: #0c696a;
+
+  /* Clinical surfaces */
+  --color-surface: #f4f7fb;
+  --color-line: #e3e9f2;
+  --color-ink: #0f1f38;
+  --color-muted: #5b6b82;
+
+  --shadow-card: 0 1px 2px rgb(15 31 56 / 0.04), 0 4px 16px rgb(15 31 56 / 0.06);
+  --shadow-pop: 0 10px 40px rgb(21 101 216 / 0.18);
+
+  --radius-xl2: 1.25rem;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-feature-settings: "ss01";
+}
+
+/* subtle medical grid used on hero / auth backgrounds */
+.bg-medical-grid {
+  background-image:
+    linear-gradient(to right, rgb(21 101 216 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(21 101 216 / 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.glass {
+  background: rgb(255 255 255 / 0.78);
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+}
+
+/* Flip directional icons (arrows/chevrons) in RTL */
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgb(14 165 164 / 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 14px rgb(14 165 164 / 0);
+  }
+}
+.animate-pulse-ring {
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+
+/* typing dots for AI */
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0.2; }
+  40% { opacity: 1; }
+}
+.dot-typing span {
+  animation: blink 1.2s infinite both;
+}
+.dot-typing span:nth-child(2) { animation-delay: 0.2s; }
+.dot-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+/* nice scrollbars */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #cfd8e6; border-radius: 999px; border: 3px solid transparent; background-clip: content-box; }
