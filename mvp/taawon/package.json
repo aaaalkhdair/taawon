@@ -9,7 +9,8 @@
     "lint": "eslint",
     "db:push": "drizzle-kit push --force",
     "db:seed": "tsx --env-file-if-exists=.env.local scripts/seed.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test tests/**/*.test.ts"
   },
   "dependencies": {
     "@google/genai": "^2.27.0",

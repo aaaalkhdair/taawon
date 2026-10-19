@@ -4,6 +4,8 @@ import { db, schema } from "@/db";
 import type { Domain, Plan, PlanTask, Submission } from "@/db/schema";
 import { addDays, dateKey, planWeek } from "./utils";
 
+import { calculateClinicalScore } from "./scoring";
+
 export const DOMAINS: Domain[] = ["communication", "cognitive", "behavior", "daily_living"];
 
 export type DomainProgress = { domain: Domain; value: number; rating: number | null; completion: number };
@@ -20,11 +22,10 @@ export type ChildProgress = {
 
 /** 70% specialist ratings + 30% task completion, per domain. Deterministic (computed in-app, not by AI). */
 function score(subs: Submission[], expected: number) {
-  const completion = expected > 0 ? Math.min(1, subs.length / expected) : 0;
+  const completionRatio = expected > 0 ? subs.length / expected : 0;
   const rated = subs.filter((s) => s.rating != null);
-  const rating = rated.length ? rated.reduce((a, s) => a + (s.rating ?? 0), 0) / rated.length / 5 : null;
-  const value = rating == null ? completion * 100 : (0.7 * rating + 0.3 * completion) * 100;
-  return { value: Math.round(value), rating: rating == null ? null : Math.round(rating * 100), completion: Math.round(completion * 100) };
+  const averageRating = rated.length ? rated.reduce((a, s) => a + (s.rating ?? 0), 0) / rated.length : null;
+  return calculateClinicalScore({ completionRatio, starRating: averageRating });
 }
 
 export async function getActivePlan(childId: string) {
